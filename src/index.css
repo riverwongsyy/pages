@@ -3,7 +3,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ==========================================================================
-   🍯 小熊维尼（Winnie the Pooh）主题全局样式库
+   🍯 小熊维尼（Winnie the Pooh）卡通主题增强版
    ========================================================================== */
 
 :root {
@@ -16,52 +16,84 @@
   --pooh-brown-light: #8d6e63;
   --pooh-bg-cream: #fffdf5;
   --pooh-card-bg: rgba(255, 253, 245, 0.95);
-  --pooh-border-clay: rgba(247, 181, 0, 0.35);
-  --pooh-shadow-honey: 0 12px 25px -5px rgba(247, 181, 0, 0.35), 0 8px 12px -6px rgba(229, 57, 53, 0.15);
+  --pooh-border-clay: rgba(247, 181, 0, 0.4);
+  --pooh-shadow-honey: 0 14px 28px -4px rgba(247, 181, 0, 0.38), 0 8px 12px -6px rgba(229, 57, 53, 0.18);
 }
 
-/* 网页全局小熊维尼奶油背景与点阵纹理 */
+/* 小熊维尼百亩森林暖阳背景 + 蜂窝纹理 + 右下角维尼形象 */
 body {
   background-color: var(--pooh-bg-cream) !important;
   background-image: 
-    radial-gradient(#f7b500 0.85px, transparent 0.85px), 
-    radial-gradient(#e53935 0.85px, var(--pooh-bg-cream) 0.85px) !important;
-  background-size: 32px 32px !important;
-  background-position: 0 0, 16px 16px !important;
+    /* 蜂窝六边形柔和底纹 */
+    radial-gradient(#f7b500 1px, transparent 1px),
+    radial-gradient(#e53935 1px, transparent 1px),
+    /* 背景渐变色 */
+    linear-gradient(135deg, #fff9e6 0%, #fff3d1 40%, #fffdf5 100%) !important;
+  background-size: 36px 36px, 36px 36px, 100% 100% !important;
+  background-position: 0 0, 18px 18px, 0 0 !important;
+  background-attachment: fixed !important;
   color: var(--pooh-brown);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Comic Sans MS", "Segoe UI", Roboto, sans-serif;
   margin: 0;
   padding: 0;
+  position: relative;
 }
 
-/* 暗黑模式下的温润木百亩森林夜间配色 */
+/* 网页右下角固定浮动的小熊维尼卡通装饰 */
+body::after {
+  content: "🍯 🐻 🐝";
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  font-size: 32px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 10px 18px;
+  border-radius: 30px;
+  border: 3px solid var(--pooh-yellow);
+  box-shadow: 0 10px 25px rgba(247, 181, 0, 0.4);
+  z-index: 9999;
+  pointer-events: none;
+  backdrop-filter: blur(8px);
+  animation: poohFloat 4s ease-in-out infinite;
+}
+
+/* 维尼可爱悬浮上下浮动动画 */
+@keyframes poohFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(3deg);
+  }
+}
+
+/* 暗黑模式下的百亩森林夜景 */
 .dark body {
   background-color: #1e1b18 !important;
   background-image: 
-    radial-gradient(rgba(247, 181, 0, 0.15) 0.85px, transparent 0.85px), 
-    radial-gradient(rgba(229, 57, 53, 0.12) 0.85px, #1e1b18 0.85px) !important;
+    radial-gradient(rgba(247, 181, 0, 0.2) 1px, transparent 1px), 
+    linear-gradient(135deg, #2b241e 0%, #1e1b18 100%) !important;
   color: #f5e6d3;
 }
 
-/* 蜂蜡润滑滚动条 */
+/* 蜜糖润滑滚动条 */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--pooh-yellow-light);
-  border-radius: 10px;
+  background: #fff8e7;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #ffe082;
   border-radius: 10px;
-  border: 2px solid var(--pooh-yellow-light);
+  border: 3px solid #fff8e7;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--pooh-yellow);
+  background: #f7b500;
 }
 
 /* 移动端与 DND 拖拽性能补丁 */
