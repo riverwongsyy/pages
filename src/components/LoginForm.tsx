@@ -1,19 +1,22 @@
+// src/components/LoginForm.tsx
 import React, { useState } from 'react';
 import {
-  TextField,
-  Button,
-  Typography,
-  Box,
-  CircularProgress,
-  Alert,
   Paper,
+  Box,
+  Avatar,
+  Typography,
+  TextField,
   FormControlLabel,
   Checkbox,
+  Button,
+  Alert,
+  CircularProgress,
+  Container,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 interface LoginFormProps {
-  onLogin: (username: string, password: string, rememberMe: boolean) => void;
+  onLogin: (username: string, password: string, remember: boolean) => Promise<void>;
   loading?: boolean;
   error?: string | null;
 }
@@ -21,135 +24,206 @@ interface LoginFormProps {
 const LoginForm: React.FC<LoginFormProps> = ({ onLogin, loading = false, error = null }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
+  const [remember, setRemember] = useState(true);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onLogin(username, password, rememberMe);
+    if (!username || !password) return;
+    await onLogin(username, password, remember);
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        width: '100%',
-        maxWidth: '100%',
-        p: { xs: 2, sm: 4 },
-      }}
-    >
+    <Container component="main" maxWidth="xs" sx={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Paper
-        elevation={3}
+        elevation={0}
         sx={{
           p: { xs: 3, sm: 4 },
-          borderRadius: 2,
           width: '100%',
-          maxWidth: { xs: '90%', sm: 400 },
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          borderRadius: '24px',
+          border: '2.5px solid rgba(247, 181, 0, 0.4)',
+          boxShadow: '0 16px 36px -6px rgba(247, 181, 0, 0.3), 0 8px 16px -6px rgba(229, 57, 53, 0.15)',
           backgroundColor: (theme) =>
-            theme.palette.mode === 'dark' ? 'rgba(33, 33, 33, 0.9)' : 'rgba(255, 255, 255, 0.9)',
-          backdropFilter: 'blur(10px)',
-          boxShadow: (theme) =>
-            theme.palette.mode === 'dark'
-              ? '0 8px 32px rgba(0, 0, 0, 0.3)'
-              : '0 8px 32px rgba(0, 0, 0, 0.1)',
+            theme.palette.mode === 'dark' ? 'rgba(38, 32, 27, 0.95)' : 'rgba(255, 253, 245, 0.96)',
+          backdropFilter: 'blur(12px)',
+          transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+          '&:hover': {
+            borderColor: '#F7B500',
+            boxShadow: '0 20px 40px -6px rgba(247, 181, 0, 0.4), 0 10px 20px -6px rgba(229, 57, 53, 0.2)',
+          },
         }}
       >
-        <Box
+        {/* 顶部蜂蜜罐头像徽章 */}
+        <Avatar
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            mb: 3,
+            m: 1,
+            bgcolor: '#FFE082',
+            color: '#E53935',
+            width: 56,
+            height: 56,
+            border: '2px solid #F7B500',
+            boxShadow: '0 4px 12px rgba(247, 181, 0, 0.3)',
+            fontSize: '1.8rem',
           }}
         >
-          <Box
-            sx={{
-              mb: 2,
-              width: 56,
-              height: 56,
-              borderRadius: '50%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'primary.main',
-              color: 'white',
-            }}
-          >
-            <LockOutlinedIcon fontSize='large' />
-          </Box>
-          <Typography component='h1' variant='h5' fontWeight='bold' textAlign='center'>
-            导航站登录
-          </Typography>
-        </Box>
+          🍯
+        </Avatar>
+
+        {/* 标题 */}
+        <Typography
+          component="h1"
+          variant="h5"
+          fontWeight="800"
+          sx={{
+            color: '#5D4037',
+            mt: 1,
+            mb: 2,
+            letterSpacing: '0.5px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 0.5,
+          }}
+        >
+          导航站登录 🐝
+        </Typography>
 
         {error && (
-          <Alert severity='error' sx={{ mb: 3 }}>
+          <Alert severity="error" sx={{ width: '100%', mb: 2, borderRadius: '14px' }}>
             {error}
           </Alert>
         )}
 
-        <Box component='form' onSubmit={handleSubmit}>
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1, width: '100%' }}>
+          {/* 用户名输入框 */}
           <TextField
-            margin='normal'
+            margin="normal"
             required
             fullWidth
-            id='username'
-            label='用户名'
-            name='username'
-            autoComplete='username'
+            id="username"
+            label="用户名"
+            name="username"
+            autoComplete="username"
             autoFocus
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            disabled={loading}
-            sx={{ mb: 2 }}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                borderRadius: '14px',
+                bgcolor: 'rgba(255, 248, 231, 0.6)',
+                '& fieldset': {
+                  borderColor: 'rgba(247, 181, 0, 0.4)',
+                },
+                '&:hover fieldset': {
+                  borderColor: '#F7B500',
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#E53935',
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: '#8D6E63',
+                '&.Mui-focused': {
+                  color: '#E53935',
+                },
+              },
+              '& .MuiInputBase-input': {
+                color: '#5D4037',
+                fontWeight: '500',
+              },
+            }}
           />
+
+          {/* 密码输入框 */}
           <TextField
-            margin='normal'
+            margin="normal"
             required
             fullWidth
-            name='password'
-            label='密码'
-            type='password'
-            id='password'
-            autoComplete='current-password'
+            name="password"
+            label="密码"
+            type="password"
+            id="password"
+            autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            disabled={loading}
-            sx={{ mb: 2 }}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                borderRadius: '14px',
+                bgcolor: 'rgba(255, 248, 231, 0.6)',
+                '& fieldset': {
+                  borderColor: 'rgba(247, 181, 0, 0.4)',
+                },
+                '&:hover fieldset': {
+                  borderColor: '#F7B500',
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#E53935',
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: '#8D6E63',
+                '&.Mui-focused': {
+                  color: '#E53935',
+                },
+              },
+              '& .MuiInputBase-input': {
+                color: '#5D4037',
+              },
+            }}
           />
+
+          {/* 记住我 复选框 */}
           <FormControlLabel
             control={
               <Checkbox
-                value='remember'
-                color='primary'
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                disabled={loading}
+                checked={remember}
+                onChange={(e) => setRemember(e.target.checked)}
+                sx={{
+                  color: '#F7B500',
+                  '&.Mui-checked': {
+                    color: '#E53935',
+                  },
+                }}
               />
             }
-            label='记住我（一个月内免登录）'
-            sx={{ mb: 2 }}
+            label={
+              <Typography variant="body2" sx={{ color: '#5D4037', fontWeight: '500' }}>
+                记住我（一个月内免登录）
+              </Typography>
+            }
+            sx={{ mt: 1, mb: 1 }}
           />
+
+          {/* 登录按钮 */}
           <Button
-            type='submit'
+            type="submit"
             fullWidth
-            variant='contained'
-            color='primary'
-            disabled={loading || !username || !password}
-            size='large'
+            variant="contained"
+            disabled={loading}
             sx={{
-              py: 1.5,
               mt: 2,
               mb: 2,
-              borderRadius: 2,
+              py: 1.4,
+              bgcolor: '#E53935',
+              color: '#FFFFFF',
+              fontWeight: 'bold',
+              fontSize: '1rem',
+              borderRadius: '20px',
+              boxShadow: '0 6px 18px rgba(229, 57, 53, 0.35)',
+              transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+              '&:hover': {
+                bgcolor: '#C62828',
+                boxShadow: '0 8px 24px rgba(229, 57, 53, 0.45)',
+                transform: 'translateY(-2px)',
+              },
             }}
           >
-            {loading ? <CircularProgress size={24} color='inherit' /> : '登录'}
+            {loading ? <CircularProgress size={24} sx={{ color: '#FFF' }} /> : '登 录'}
           </Button>
         </Box>
       </Paper>
-    </Box>
+    </Container>
   );
 };
 
