@@ -4,7 +4,6 @@ import { Site } from '../API/http';
 import SiteSettingsModal from './SiteSettingsModal';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-// 引入Material UI组件
 import {
   Card,
   CardContent,
@@ -24,23 +23,21 @@ interface SiteCardProps {
   onDelete: (siteId: number) => void;
   isEditMode?: boolean;
   index?: number;
-  iconApi?: string; // 添加iconApi属性
+  iconApi?: string;
 }
 
-// 使用memo包装组件以减少不必要的重渲染
 const SiteCard = memo(function SiteCard({
   site,
   onUpdate,
   onDelete,
   isEditMode = false,
   index = 0,
-  iconApi, // 添加iconApi参数
+  iconApi,
 }: SiteCardProps) {
   const [showSettings, setShowSettings] = useState(false);
   const [iconError, setIconError] = useState(!site.icon);
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  // 使用dnd-kit的useSortable hook
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: `site-${site.id || index}`,
     disabled: !isEditMode,
@@ -54,48 +51,41 @@ const SiteCard = memo(function SiteCard({
     position: 'relative' as const,
   };
 
-  // 如果没有图标，使用首字母作为图标
   const fallbackIcon = site.name.charAt(0).toUpperCase();
 
-  // 处理设置按钮点击
   const handleSettingsClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // 阻止卡片点击事件
-    e.preventDefault(); // 防止默认行为
+    e.stopPropagation();
+    e.preventDefault();
     setShowSettings(true);
   };
 
-  // 处理关闭设置
   const handleCloseSettings = () => {
     setShowSettings(false);
   };
 
-  // 处理卡片点击
   const handleCardClick = () => {
     if (!isEditMode && site.url) {
       window.open(site.url, '_blank');
     }
   };
 
-  // 处理图标加载错误
   const handleIconError = () => {
     setIconError(true);
   };
 
-  // 处理图片加载完成
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
 
-  // 卡片内容
   const cardContent = (
     <Box
       sx={{
         height: '100%',
         position: 'relative',
-        transition: 'transform 0.3s ease-in-out',
+        transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
         ...(!isEditMode && {
           '&:hover': {
-            transform: 'translateY(-4px)',
+            transform: 'translateY(-5px) scale(1.02)',
           },
         }),
       }}
@@ -105,20 +95,22 @@ const SiteCard = memo(function SiteCard({
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          borderRadius: 3,
-          transition: 'box-shadow 0.3s ease-in-out',
-          border: '1px solid',
-          borderColor: 'divider',
-          boxShadow: isDragging ? 8 : 2,
+          borderRadius: '18px',
+          border: '2px solid rgba(247, 181, 0, 0.35)',
+          transition: 'all 0.3s ease-in-out',
+          boxShadow: isDragging 
+            ? '0 15px 30px rgba(247, 181, 0, 0.4)' 
+            : '0 4px 14px rgba(93, 64, 55, 0.06)',
           '&:hover': !isEditMode
             ? {
-                boxShadow: 5,
+                borderColor: '#F7B500',
+                boxShadow: '0 12px 25px -4px rgba(247, 181, 0, 0.35), 0 6px 10px -4px rgba(229, 57, 53, 0.15)',
               }
             : {},
           overflow: 'hidden',
           backgroundColor: (theme) =>
-            theme.palette.mode === 'dark' ? 'rgba(33, 33, 33, 0.9)' : 'rgba(255, 255, 255, 0.9)',
-          backdropFilter: 'blur(5px)',
+            theme.palette.mode === 'dark' ? 'rgba(45, 38, 32, 0.92)' : 'rgba(255, 253, 245, 0.95)',
+          backdropFilter: 'blur(8px)',
         }}
       >
         {isEditMode ? (
@@ -132,19 +124,20 @@ const SiteCard = memo(function SiteCard({
             }}
           >
             <Box position='absolute' top={8} right={8}>
-              <DragIndicatorIcon fontSize='small' color='primary' />
+              <DragIndicatorIcon fontSize='small' sx={{ color: '#F7B500' }} />
             </Box>
-            {/* 图标和名称 */}
             <Box display='flex' alignItems='center' mb={1}>
               {!iconError && site.icon ? (
-                <Box position='relative' mr={1.5} width={32} height={32} flexShrink={0}>
+                <Box position='relative' mr={1.5} width={34} height={34} flexShrink={0}>
                   <Skeleton
                     variant='rounded'
-                    width={32}
-                    height={32}
+                    width={34}
+                    height={34}
                     sx={{
                       display: !imageLoaded ? 'block' : 'none',
                       position: 'absolute',
+                      borderRadius: '10px',
+                      bgcolor: '#FFF8E7',
                     }}
                   />
                   <Fade in={imageLoaded} timeout={500}>
@@ -153,10 +146,11 @@ const SiteCard = memo(function SiteCard({
                       src={site.icon}
                       alt={site.name}
                       sx={{
-                        width: 32,
-                        height: 32,
-                        borderRadius: 1,
+                        width: 34,
+                        height: 34,
+                        borderRadius: '10px',
                         objectFit: 'cover',
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
                       }}
                       onError={handleIconError}
                       onLoad={handleImageLoad}
@@ -166,18 +160,19 @@ const SiteCard = memo(function SiteCard({
               ) : (
                 <Box
                   sx={{
-                    width: 32,
-                    height: 32,
+                    width: 34,
+                    height: 34,
                     mr: 1.5,
-                    borderRadius: 1,
-                    bgcolor: 'primary.light',
-                    color: 'primary.main',
+                    borderRadius: '10px',
+                    bgcolor: '#FFE082',
+                    color: '#5D4037',
+                    fontWeight: 'bold',
+                    fontSize: '1rem',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    border: 1,
-                    borderColor: 'primary.main',
-                    opacity: 0.8,
+                    border: '1.5px solid #F7B500',
+                    boxShadow: '0 2px 5px rgba(247, 181, 0, 0.2)',
                   }}
                 >
                   {fallbackIcon}
@@ -185,27 +180,27 @@ const SiteCard = memo(function SiteCard({
               )}
               <Typography
                 variant='subtitle1'
-                fontWeight='medium'
+                fontWeight='700'
                 noWrap
                 sx={{
-                  fontSize: { xs: '0.875rem', sm: '1rem' },
+                  color: '#5D4037',
+                  fontSize: { xs: '0.875rem', sm: '0.95rem' },
                 }}
               >
                 {site.name}
               </Typography>
             </Box>
 
-            {/* 描述 */}
             <Typography
               variant='body2'
-              color='text.secondary'
               sx={{
+                color: '#8D6E63',
                 display: '-webkit-box',
                 WebkitLineClamp: 2,
                 WebkitBoxOrient: 'vertical',
                 overflow: 'hidden',
                 flexGrow: 1,
-                fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                fontSize: { xs: '0.75rem', sm: '0.825rem' },
               }}
             >
               {site.description || '暂无描述'}
@@ -223,17 +218,18 @@ const SiteCard = memo(function SiteCard({
                 '&:last-child': { pb: { xs: 1.5, sm: 2 } },
               }}
             >
-              {/* 图标和名称 */}
               <Box display='flex' alignItems='center' mb={1}>
                 {!iconError && site.icon ? (
-                  <Box position='relative' mr={1.5} width={32} height={32} flexShrink={0}>
+                  <Box position='relative' mr={1.5} width={34} height={34} flexShrink={0}>
                     <Skeleton
                       variant='rounded'
-                      width={32}
-                      height={32}
+                      width={34}
+                      height={34}
                       sx={{
                         display: !imageLoaded ? 'block' : 'none',
                         position: 'absolute',
+                        borderRadius: '10px',
+                        bgcolor: '#FFF8E7',
                       }}
                     />
                     <Fade in={imageLoaded} timeout={500}>
@@ -242,10 +238,11 @@ const SiteCard = memo(function SiteCard({
                         src={site.icon}
                         alt={site.name}
                         sx={{
-                          width: 32,
-                          height: 32,
-                          borderRadius: 1,
+                          width: 34,
+                          height: 34,
+                          borderRadius: '10px',
                           objectFit: 'cover',
+                          boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
                         }}
                         onError={handleIconError}
                         onLoad={handleImageLoad}
@@ -255,18 +252,19 @@ const SiteCard = memo(function SiteCard({
                 ) : (
                   <Box
                     sx={{
-                      width: 32,
-                      height: 32,
+                      width: 34,
+                      height: 34,
                       mr: 1.5,
-                      borderRadius: 1,
-                      bgcolor: 'primary.light',
-                      color: 'primary.main',
+                      borderRadius: '10px',
+                      bgcolor: '#FFE082',
+                      color: '#5D4037',
+                      fontWeight: 'bold',
+                      fontSize: '1rem',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      border: 1,
-                      borderColor: 'primary.main',
-                      opacity: 0.8,
+                      border: '1.5px solid #F7B500',
+                      boxShadow: '0 2px 5px rgba(247, 181, 0, 0.2)',
                     }}
                   >
                     {fallbackIcon}
@@ -274,44 +272,45 @@ const SiteCard = memo(function SiteCard({
                 )}
                 <Typography
                   variant='subtitle1'
-                  fontWeight='medium'
+                  fontWeight='700'
                   noWrap
                   sx={{
-                    fontSize: { xs: '0.875rem', sm: '1rem' },
+                    color: '#5D4037',
+                    fontSize: { xs: '0.875rem', sm: '0.95rem' },
                   }}
                 >
                   {site.name}
                 </Typography>
               </Box>
 
-              {/* 描述 */}
               <Typography
                 variant='body2'
-                color='text.secondary'
                 sx={{
+                  color: '#8D6E63',
                   display: '-webkit-box',
                   WebkitLineClamp: 2,
                   WebkitBoxOrient: 'vertical',
                   overflow: 'hidden',
                   flexGrow: 1,
-                  fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                  fontSize: { xs: '0.75rem', sm: '0.825rem' },
                 }}
               >
                 {site.description || '暂无描述'}
               </Typography>
 
-              {/* 设置按钮 */}
               <IconButton
                 size='small'
                 sx={{
                   position: 'absolute',
                   top: 8,
                   right: 8,
-                  bgcolor: 'action.hover',
+                  bgcolor: '#FFF8E7',
+                  color: '#E53935',
                   opacity: 0,
-                  transition: 'opacity 0.2s',
+                  transition: 'all 0.2s',
                   '&:hover': {
-                    bgcolor: 'action.selected',
+                    bgcolor: '#E53935',
+                    color: '#FFF',
                   },
                   '.MuiCardActionArea-root:hover &': {
                     opacity: 1,
@@ -342,7 +341,7 @@ const SiteCard = memo(function SiteCard({
             onUpdate={onUpdate}
             onDelete={onDelete}
             onClose={handleCloseSettings}
-            iconApi={iconApi} // 传递iconApi给SiteSettingsModal
+            iconApi={iconApi}
           />
         )}
       </>
@@ -359,7 +358,7 @@ const SiteCard = memo(function SiteCard({
           onUpdate={onUpdate}
           onDelete={onDelete}
           onClose={handleCloseSettings}
-          iconApi={iconApi} // 传递iconApi给SiteSettingsModal
+          iconApi={iconApi}
         />
       )}
     </>
