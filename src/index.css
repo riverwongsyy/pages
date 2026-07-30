@@ -3,7 +3,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ==========================================================================
-   🍯 小熊维尼（Winnie the Pooh）卡通形象手绘背景版
+   🍯 小熊维尼（Winnie the Pooh）高清官方插画壁纸背景版
    ========================================================================== */
 
 :root {
@@ -13,9 +13,9 @@
   --pooh-brown: #5d4037;
   --pooh-brown-light: #8d6e63;
   --pooh-bg-cream: #fffcf2;
-  --pooh-card-bg: rgba(255, 253, 245, 0.95);
-  --pooh-border-clay: rgba(247, 181, 0, 0.35);
-  --pooh-shadow-honey: 0 12px 25px -5px rgba(247, 181, 0, 0.3);
+  --pooh-card-bg: rgba(255, 253, 245, 0.92);
+  --pooh-border-clay: rgba(247, 181, 0, 0.38);
+  --pooh-shadow-honey: 0 12px 25px -5px rgba(247, 181, 0, 0.35);
 }
 
 /* 强制清除所有中间容器的白底遮挡 */
@@ -23,18 +23,16 @@
   background-color: transparent !important;
 }
 
-/* 网页背景：两侧放可爱的【小熊维尼卡通矢量手绘】，中间柔和淡色 */
+/* 网页背景：全屏铺满你上传的小熊维尼官方大图壁纸 (public/pooh-bg.jpg) */
 body {
   background-color: var(--pooh-bg-cream) !important;
   background-image: 
-    /* 1. 左侧：抱着蜂蜜罐的维尼小熊卡通矢量形象 */
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='220' viewBox='0 0 160 220'%3E%3C!-- 维尼耳朵 --%3E%3Ccircle cx='40' cy='35' r='16' fill='%23F5B027'/%3E%3Ccircle cx='120' cy='35' r='16' fill='%23F5B027'/%3E%3C!-- 维尼圆脸 --%3E%3Cellipse cx='80' cy='65' rx='48' ry='42' fill='%23F5B027'/%3E%3C!-- 眼睛和嘴巴 --%3E%3Ccircle cx='62' cy='58' r='4' fill='%233E2723'/%3E%3Ccircle cx='98' cy='58' r='4' fill='%233E2723'/%3E%3Cellipse cx='80' cy='68' rx='7' ry='5' fill='%233E2723'/%3E%3Cpath d='M70 78 Q80 88 90 78' stroke='%233E2723' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C!-- 经典红衫衫 --%3E%3Cpath d='M42 92 C32 110 32 135 48 140 L112 140 C128 135 128 110 118 92 Z' fill='%23E53935'/%3E%3C!-- 蜂蜜罐 HUNNY --%3E%3Crect x='50' y='145' width='60' height='55' rx='12' fill='%238D6E63'/%3E%3Cpath d='M45 145 Q80 135 115 145 L110 155 Q80 148 50 155 Z' fill='%236D4C41'/%3E%3Ctext x='80' y='180' font-family='Arial' font-size='13' font-weight='bold' fill='%23FFF' text-anchor='middle'%3EHUNNY%3C/text%3E%3Cpath d='M65 142 C70 155 90 155 95 142 Z' fill='%23F5B027'/%3E%3C/svg%3E"),
-    /* 2. 右侧：浮动的小蜜蜂与蜂蜜滴 */
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Ccircle cx='60' cy='60' r='18' fill='%23F5B027'/%3E%3Cpath d='M50 48 L50 72 M60 44 L60 76 M70 48 L70 72' stroke='%233E2723' stroke-width='4'/%3E%3Cellipse cx='50' cy='36' rx='8' ry='14' fill='%23E0F7FA' opacity='0.8' transform='rotate(-20 50 36)'/%3E%3Cellipse cx='70' cy='36' rx='8' ry='14' fill='%23E0F7FA' opacity='0.8' transform='rotate(20 70 36)'/%3E%3Ccircle cx='46' cy='58' r='2.5' fill='%233E2723'/%3E%3C/svg%3E"),
-    /* 3. 中间淡雅清爽背景 */
-    linear-gradient(180deg, #fffcf2 0%, #fff7e6 100%) !important;
-  background-position: left 25px top 80px, right 30px top 140px, 0 0 !important;
-  background-repeat: no-repeat, no-repeat, repeat !important;
+    /* 柔和护眼半透明蒙版 + 维尼壁纸 */
+    linear-gradient(rgba(255, 253, 245, 0.68), rgba(255, 253, 245, 0.68)),
+    url('/pooh-bg.jpg') !important;
+  background-size: cover !important;
+  background-position: center top !important;
+  background-repeat: no-repeat !important;
   background-attachment: fixed !important;
   color: var(--pooh-brown);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -67,7 +65,11 @@ body::after {
 
 .dark body {
   background-color: #1e1b18 !important;
-  background-image: linear-gradient(135deg, #2b241e 0%, #1e1b18 100%) !important;
+  background-image: 
+    linear-gradient(rgba(30, 27, 24, 0.8), rgba(30, 27, 24, 0.8)),
+    url('/pooh-bg.jpg') !important;
+  background-size: cover !important;
+  background-position: center top !important;
   color: #f5e6d3;
 }
 
