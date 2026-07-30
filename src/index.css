@@ -1,3 +1,87 @@
 @import 'tailwindcss';
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* ==========================================================================
+   🍯 小熊维尼（Winnie the Pooh）主题全局样式库
+   ========================================================================== */
+
+:root {
+  --pooh-yellow: #f7b500;
+  --pooh-yellow-light: #fff8e7;
+  --pooh-yellow-hover: #ffc107;
+  --pooh-red: #e53935;
+  --pooh-red-hover: #c62828;
+  --pooh-brown: #5d4037;
+  --pooh-brown-light: #8d6e63;
+  --pooh-bg-cream: #fffdf5;
+  --pooh-card-bg: rgba(255, 253, 245, 0.95);
+  --pooh-border-clay: rgba(247, 181, 0, 0.35);
+  --pooh-shadow-honey: 0 12px 25px -5px rgba(247, 181, 0, 0.35), 0 8px 12px -6px rgba(229, 57, 53, 0.15);
+}
+
+/* 网页全局小熊维尼奶油背景与点阵纹理 */
+body {
+  background-color: var(--pooh-bg-cream) !important;
+  background-image: 
+    radial-gradient(#f7b500 0.85px, transparent 0.85px), 
+    radial-gradient(#e53935 0.85px, var(--pooh-bg-cream) 0.85px) !important;
+  background-size: 32px 32px !important;
+  background-position: 0 0, 16px 16px !important;
+  color: var(--pooh-brown);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* 暗黑模式下的温润木百亩森林夜间配色 */
+.dark body {
+  background-color: #1e1b18 !important;
+  background-image: 
+    radial-gradient(rgba(247, 181, 0, 0.15) 0.85px, transparent 0.85px), 
+    radial-gradient(rgba(229, 57, 53, 0.12) 0.85px, #1e1b18 0.85px) !important;
+  color: #f5e6d3;
+}
+
+/* 蜂蜡润滑滚动条 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--pooh-yellow-light);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ffe082;
+  border-radius: 10px;
+  border: 2px solid var(--pooh-yellow-light);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--pooh-yellow);
+}
+
+/* 移动端与 DND 拖拽性能补丁 */
+.duration-0 {
+  --tw-duration: 0ms;
+  transition-duration: 0ms;
+  transition-delay: 0ms;
+}
+
+[data-dnd-draggable-context='true'] {
+  transition: none !important;
+}
+
+[data-dragging='true'] {
+  transition: none !important;
+  transform: translate3d(var(--translate-x, 0), var(--translate-y, 0), 0) !important;
+  z-index: 9999 !important;
+}
+
+[data-dnd-draggable] {
+  transform-origin: 0 0;
+  contain: layout;
+}
