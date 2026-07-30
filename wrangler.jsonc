@@ -5,7 +5,6 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "navigation-db-local",
       "database_id": "3c16d81e-5d0e-4c27-b22c-ca8ce3d8518d"
     }
   ]
