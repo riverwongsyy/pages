@@ -13,7 +13,6 @@ import {
   CircularProgress,
   Container,
 } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 interface LoginFormProps {
   onLogin: (username: string, password: string, remember: boolean) => Promise<void>;
