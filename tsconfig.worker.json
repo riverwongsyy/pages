@@ -8,5 +8,5 @@
             "vite/client"
         ]
     },
-    "include": ["worker"]
+    "include": ["functions"]
 }
