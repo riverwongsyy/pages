@@ -3,21 +3,19 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ==========================================================================
-   🍯 小熊维尼（Winnie the Pooh）透亮蜜糖金黄背景
+   🍯 小熊维尼（Winnie the Pooh）卡通形象手绘背景版
    ========================================================================== */
 
 :root {
   --pooh-yellow: #f7b500;
-  --pooh-yellow-light: #fff8e7;
-  --pooh-yellow-hover: #ffc107;
+  --pooh-yellow-light: #fffdf5;
   --pooh-red: #e53935;
-  --pooh-red-hover: #c62828;
   --pooh-brown: #5d4037;
   --pooh-brown-light: #8d6e63;
-  --pooh-bg-cream: #fff9e6;
+  --pooh-bg-cream: #fffcf2;
   --pooh-card-bg: rgba(255, 253, 245, 0.95);
-  --pooh-border-clay: rgba(247, 181, 0, 0.4);
-  --pooh-shadow-honey: 0 14px 28px -4px rgba(247, 181, 0, 0.38), 0 8px 12px -6px rgba(229, 57, 53, 0.18);
+  --pooh-border-clay: rgba(247, 181, 0, 0.35);
+  --pooh-shadow-honey: 0 12px 25px -5px rgba(247, 181, 0, 0.3);
 }
 
 /* 强制清除所有中间容器的白底遮挡 */
@@ -25,14 +23,18 @@
   background-color: transparent !important;
 }
 
-/* 全屏鲜明蜜糖金黄渐变 + 清晰蜂窝纹理 */
+/* 网页背景：两侧放可爱的【小熊维尼卡通矢量手绘】，中间柔和淡色 */
 body {
-  background-color: #fff9e6 !important;
+  background-color: var(--pooh-bg-cream) !important;
   background-image: 
-    /* 高清晰蜂窝六边形纹理 */
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='98' viewBox='0 0 56 98'%3E%3Cpath fill='%23f7b500' fill-opacity='0.28' d='M28 66L0 50L0 18L28 2L56 18L56 50L28 66ZM28 98L0 82L0 50L28 34L56 50L56 82L28 98Z'/%3E%3C/svg%3E"),
-    /* 鲜明温暖蜜糖渐变 */
-    linear-gradient(135deg, #fde68a 0%, #fff3c4 50%, #fffbeb 100%) !important;
+    /* 1. 左侧：抱着蜂蜜罐的维尼小熊卡通矢量形象 */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='220' viewBox='0 0 160 220'%3E%3C!-- 维尼耳朵 --%3E%3Ccircle cx='40' cy='35' r='16' fill='%23F5B027'/%3E%3Ccircle cx='120' cy='35' r='16' fill='%23F5B027'/%3E%3C!-- 维尼圆脸 --%3E%3Cellipse cx='80' cy='65' rx='48' ry='42' fill='%23F5B027'/%3E%3C!-- 眼睛和嘴巴 --%3E%3Ccircle cx='62' cy='58' r='4' fill='%233E2723'/%3E%3Ccircle cx='98' cy='58' r='4' fill='%233E2723'/%3E%3Cellipse cx='80' cy='68' rx='7' ry='5' fill='%233E2723'/%3E%3Cpath d='M70 78 Q80 88 90 78' stroke='%233E2723' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C!-- 经典红衫衫 --%3E%3Cpath d='M42 92 C32 110 32 135 48 140 L112 140 C128 135 128 110 118 92 Z' fill='%23E53935'/%3E%3C!-- 蜂蜜罐 HUNNY --%3E%3Crect x='50' y='145' width='60' height='55' rx='12' fill='%238D6E63'/%3E%3Cpath d='M45 145 Q80 135 115 145 L110 155 Q80 148 50 155 Z' fill='%236D4C41'/%3E%3Ctext x='80' y='180' font-family='Arial' font-size='13' font-weight='bold' fill='%23FFF' text-anchor='middle'%3EHUNNY%3C/text%3E%3Cpath d='M65 142 C70 155 90 155 95 142 Z' fill='%23F5B027'/%3E%3C/svg%3E"),
+    /* 2. 右侧：浮动的小蜜蜂与蜂蜜滴 */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Ccircle cx='60' cy='60' r='18' fill='%23F5B027'/%3E%3Cpath d='M50 48 L50 72 M60 44 L60 76 M70 48 L70 72' stroke='%233E2723' stroke-width='4'/%3E%3Cellipse cx='50' cy='36' rx='8' ry='14' fill='%23E0F7FA' opacity='0.8' transform='rotate(-20 50 36)'/%3E%3Cellipse cx='70' cy='36' rx='8' ry='14' fill='%23E0F7FA' opacity='0.8' transform='rotate(20 70 36)'/%3E%3Ccircle cx='46' cy='58' r='2.5' fill='%233E2723'/%3E%3C/svg%3E"),
+    /* 3. 中间淡雅清爽背景 */
+    linear-gradient(180deg, #fffcf2 0%, #fff7e6 100%) !important;
+  background-position: left 25px top 80px, right 30px top 140px, 0 0 !important;
+  background-repeat: no-repeat, no-repeat, repeat !important;
   background-attachment: fixed !important;
   color: var(--pooh-brown);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -40,7 +42,7 @@ body {
   padding: 0;
 }
 
-/* 右下角浮动小熊维尼卡通徽章 */
+/* 右下角小熊维尼悬浮微章 */
 body::after {
   content: "🍯 🐻 🐝";
   position: fixed;
@@ -51,7 +53,7 @@ body::after {
   padding: 10px 18px;
   border-radius: 30px;
   border: 3px solid var(--pooh-yellow);
-  box-shadow: 0 10px 25px rgba(247, 181, 0, 0.45);
+  box-shadow: 0 10px 25px rgba(247, 181, 0, 0.4);
   z-index: 9999;
   pointer-events: none;
   backdrop-filter: blur(8px);
